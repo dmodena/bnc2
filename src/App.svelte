@@ -3,6 +3,7 @@
     import History from './game/History.svelte';
     import GuessView from './game/GuessView.svelte';
     import Status from './game/Status.svelte';
+    import ControlButtons from './game/ControlButtons.svelte';
 </script>
 
 <div class="container">
@@ -10,4 +11,5 @@
     <History />
     <GuessView />
     <Status />
+    <ControlButtons />
 </div>
