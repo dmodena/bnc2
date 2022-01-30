@@ -26,6 +26,14 @@
         worker.postMessage({ fn: 'giveUp' });
     }
 
+    function handleNumberPressed(number) {
+        console.log('Number pressed', number);
+    }
+
+    function handleActionPressed(actionBtn) {
+        console.log('Action pressed', actionBtn);
+    }
+
     function receiveFromWorker(message) {
         switch (message.data.fn) {
             case 'startGame':
@@ -53,5 +61,5 @@
         <GiveUpButton on:click={giveUp}/>
     </div>
     <hr />
-    <Keypad />
+    <Keypad on:numberPressed={handleNumberPressed} on:actionPressed={handleActionPressed} />
 </div>
