@@ -8,6 +8,14 @@
     import Keypad from './game/Keypad.svelte';
 
     let guess = [];
+
+    function startGame() {
+        console.log('Clicked start game');
+    }
+
+    function giveUp() {
+        console.log('Clicked give up');
+    }
 </script>
 
 <div class="container">
@@ -16,8 +24,8 @@
     <GuessView />
     <Status />
     <div class="row mt-3">
-        <StartGameButton />
-        <GiveUpButton />
+        <StartGameButton on:click={startGame} />
+        <GiveUpButton on:click={giveUp}/>
     </div>
     <hr />
     <Keypad />
