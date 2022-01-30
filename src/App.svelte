@@ -4,6 +4,7 @@
     import GuessView from './game/GuessView.svelte';
     import Status from './game/Status.svelte';
     import ControlButtons from './game/ControlButtons.svelte';
+    import Keypad from './game/Keypad.svelte';
 </script>
 
 <div class="container">
@@ -12,4 +13,6 @@
     <GuessView />
     <Status />
     <ControlButtons />
+    <hr />
+    <Keypad />
 </div>
