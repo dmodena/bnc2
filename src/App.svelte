@@ -9,6 +9,7 @@
     import Keypad from './game/Keypad.svelte';
 
     let guess = [];
+    let statusMessage = '';
     let worker;
 
     onMount(() => {
@@ -17,12 +18,10 @@
     });
 
     function startGame() {
-        console.log('Clicked start game');
         worker.postMessage({ fn: 'startGame' });
     }
 
     function giveUp() {
-        console.log('Clicked give up');
         worker.postMessage({ fn: 'giveUp' });
     }
 
@@ -34,13 +33,17 @@
         console.log('Action pressed', actionBtn);
     }
 
+    function updateStatus(message) {
+        statusMessage = message;
+    }
+
     function receiveFromWorker(message) {
         switch (message.data.fn) {
             case 'startGame':
-                console.log('started game : )');
+                updateStatus(message.data.val);
                 break;
             case 'giveUp':
-                console.log('gave up : (');
+                updateStatus(message.data.val);
                 break;
             case 'guess':
                 console.log('you guessed sth : S');
@@ -55,7 +58,7 @@
     <GameHeader />
     <History />
     <GuessView />
-    <Status />
+    <Status message={statusMessage} />
     <div class="row mt-3">
         <StartGameButton on:click={startGame} />
         <GiveUpButton on:click={giveUp}/>
