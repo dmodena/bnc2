@@ -6,6 +6,9 @@
 </style>
 
 <script>
+    import { createEventDispatcher } from 'svelte';
+
+    const dispatch = createEventDispatcher();
     const bull = `<i class="bi bi-plus-circle"></i> `;
     const cow = `<i class="bi bi-dash-circle"></i> `;
     const none = `<i class="bi bi-dash-lg"></i> `;
@@ -20,7 +23,14 @@
         if (result.length == 0)
             result += none;
 
+        if (feedback.filter(x => x == 1).length == 4)
+            dispatch('victory');
+
         return result;
+    }
+
+    export function clearHistory() {
+        history = '';
     }
 
     export function receiveHistory(guessAttempt, guess, feedback) {

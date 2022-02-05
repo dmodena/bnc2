@@ -21,6 +21,10 @@
     });
 
     function startGame() {
+        guess = [];
+        lastGuess = '';
+        guessAttempt = 0;
+        history.clearHistory();
         worker.postMessage({ fn: 'startGame' });
     }
 
@@ -50,12 +54,17 @@
 
         worker.postMessage({ fn: 'guess', val: guess });
         lastGuess = guess.join('');
+        updateStatus(`Last guess: ${lastGuess}`);
         guessAttempt++;
         guess = [];
     }
 
     function handleHistory(e) {
         history.receiveHistory(guessAttempt, lastGuess, e);
+    }
+
+    function handleVictory() {
+        updateStatus(`You won! The secret number was: ${lastGuess}`);
     }
 
     function updateStatus(message) {
@@ -71,7 +80,6 @@
                 updateStatus(message.data.val);
                 break;
             case 'guess':
-                console.log(message.data.val);
                 handleHistory(message.data.val);
                 break;
             default:
@@ -82,7 +90,7 @@
 
 <div class="container">
     <GameHeader />
-    <History bind:this={history} />
+    <History bind:this={history} on:victory={handleVictory} />
     <GuessView {guess} />
     <Status message={statusMessage} />
     <div class="row mt-3">
