@@ -9,7 +9,10 @@
     import Keypad from './game/Keypad.svelte';
 
     let guess = [];
+    let lastGuess = '';
+    let guessAttempt = 0;
     let statusMessage = '';
+    let history;
     let worker;
 
     onMount(() => {
@@ -46,7 +49,13 @@
             return;
 
         worker.postMessage({ fn: 'guess', val: guess });
+        lastGuess = guess.join('');
+        guessAttempt++;
         guess = [];
+    }
+
+    function handleHistory(e) {
+        history.receiveHistory(guessAttempt, lastGuess, e);
     }
 
     function updateStatus(message) {
@@ -63,7 +72,7 @@
                 break;
             case 'guess':
                 console.log(message.data.val);
-                console.log('you guessed sth : S');
+                handleHistory(message.data.val);
                 break;
             default:
                 break;
@@ -73,7 +82,7 @@
 
 <div class="container">
     <GameHeader />
-    <History />
+    <History bind:this={history} />
     <GuessView {guess} />
     <Status message={statusMessage} />
     <div class="row mt-3">
