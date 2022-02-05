@@ -25,12 +25,28 @@
         worker.postMessage({ fn: 'giveUp' });
     }
 
-    function handleNumberPressed(number) {
-        console.log('Number pressed', number);
+    function handleNumberPressed(e) {
+        if (guess.length > 3)
+            return;
+
+        guess.push(e.detail);
+        guess = [...guess];
     }
 
-    function handleActionPressed(actionBtn) {
-        console.log('Action pressed', actionBtn);
+    function handleBackspace() {
+        if (guess.length == 0)
+            return;
+
+        guess.pop();
+        guess = [...guess];
+    }
+
+    function handleSubmit() {
+        if (guess.length != 4)
+            return;
+
+        worker.postMessage({ fn: 'guess', val: guess });
+        guess = [];
     }
 
     function updateStatus(message) {
@@ -46,6 +62,7 @@
                 updateStatus(message.data.val);
                 break;
             case 'guess':
+                console.log(message.data.val);
                 console.log('you guessed sth : S');
                 break;
             default:
@@ -57,12 +74,15 @@
 <div class="container">
     <GameHeader />
     <History />
-    <GuessView />
+    <GuessView {guess} />
     <Status message={statusMessage} />
     <div class="row mt-3">
         <StartGameButton on:click={startGame} />
         <GiveUpButton on:click={giveUp}/>
     </div>
     <hr />
-    <Keypad on:numberPressed={handleNumberPressed} on:actionPressed={handleActionPressed} />
+    <Keypad
+        on:numberPressed={handleNumberPressed}
+        on:submitPressed={handleSubmit}
+        on:backspacePressed={handleBackspace} />
 </div>

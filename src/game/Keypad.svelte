@@ -7,8 +7,12 @@
         dispatch('numberPressed', number);
     }
 
-    function actionPressed(actionBtn) {
-        dispatch('actionPressed', actionBtn);
+    function submitPressed() {
+        dispatch('submitPressed');
+    }
+
+    function backspacePressed() {
+        dispatch('backspacePressed');
     }
 </script>
 
@@ -48,13 +52,13 @@
     </div>
     <div class="row mt-2">
     <div class="d-grid col-4">
-        <button id="guessBtn" class="btn btn-outline-success" type="button" on:click={() => actionPressed('Submit')}><i class="bi bi-check2"></i></button>
+        <button id="guessBtn" class="btn btn-outline-success" type="button" on:click={() => submitPressed()}><i class="bi bi-check2"></i></button>
       </div>
       <div class="d-grid col-4">
         <button id="numBtn0" class="btn btn-outline-secondary" type="button" on:click={() => numberPressed(0)}>0</button>
       </div>
       <div class="d-grid col-4">
-        <button id="backspaceBtn" class="btn btn-outline-danger" type="button" on:click={() => actionPressed('Backspace')}><i class="bi bi-arrow-left"></i></button>
+        <button id="backspaceBtn" class="btn btn-outline-danger" type="button" on:click={() => backspacePressed()}><i class="bi bi-arrow-left"></i></button>
       </div>
     </div>
 </div>
